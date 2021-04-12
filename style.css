@@ -1,0 +1,12 @@
+aside
+ {
+    position: relative;
+    left: 5px;
+    right: 15px;
+    top: 15px;
+    bottom: 15px;
+    width: 40%;
+    height: 100%;
+    float: right;
+    position: sticky;
+}

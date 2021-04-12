@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <head>
-DUPA
+PARAGON
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-
-<table id="recipt">
-    <tr><th>lp</th><th>Nazwa</th><th>Ilość</th><th>Cena</th><th>Suma</th></tr>
-</table>
-
+    <div>
+        <table id="recipt">
+            <tr><th>lp</th><th>Nazwa</th><th>Ilość</th><th>Cena</th><th>Suma</th></tr>
+        </table>
+        <aside hidden id="edit_form">
+            <form id="edit-el">
+                <a>Nazwa</a>
+                <input name="name" type="text"/><br/>
+                <a>Ilośc</a>
+                <input name="count" type="number"/><br/>
+                <a>Cena</a>
+                <input name="price" type="number"/><br/>
+                <input type="submit"/>
+                </form>
+        </aside>        
+    </div>    
 <form id="add-el">
 <a>Nazwa</a>
 <input name="name" type="text"/><br/>
@@ -17,6 +29,7 @@ DUPA
 <input name="price" type="number"/><br/>
 <input type="submit"/>
 </form>
+
 
 <script src="script.js"></script>
 
