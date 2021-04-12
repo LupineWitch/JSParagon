@@ -4,6 +4,9 @@ var editedID = -1;
 var dragging;
 var draggedOver;
 
+items = JSON.parse(localStorage.getItem("receipt") || "[]");
+console.log(items);
+
 class Element
 {
     constructor(name,count,price)
@@ -92,17 +95,6 @@ const compare = (e) => {
     RebuildRecipt();
 };
 
-
-const setDraggedOver = (e) => {
-    e.preventDefault();
-    draggedOver = e.target;
-}
-
-const setDragging = (e) => {
-    dragging = e.target;
-}
-
-
 function isEmptyOrSpaces(str)
 {
     return str === null || str.match(/^ *$/) !== null;
@@ -117,8 +109,10 @@ addform.onsubmit = (event) => {
         let element = new Element(addform.name.value, newCount, newPrice);
         items.push(element);
         console.log(element);
+        localStorage.setItem("receipt", JSON.stringify(items));
         RebuildRecipt();
     }
+    //localStorage.receipt = JSON.stringify(items);
     event.preventDefault()
 }
 
@@ -134,6 +128,7 @@ editform.onsubmit = (event) => {
         editedID = -1;
         let editForm = document.getElementById("edit_form");
         editForm.setAttribute("hidden", "");
+        localStorage.setItem("receipt", JSON.stringify(items));
         RebuildRecipt();
     }
     event.preventDefault()
