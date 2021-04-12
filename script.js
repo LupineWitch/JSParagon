@@ -1,6 +1,6 @@
-
 var items = [];
 var editedID = -1;
+
 var dragging;
 var draggedOver;
 
@@ -13,11 +13,10 @@ class Element
         this._count = count;
     }
 
-     elementTotal()
+    elementTotal()
     {
-    return this._price*this._count;    
+        return this._price*this._count;    
     }
-
 }
 
 function elementEdit()
@@ -26,11 +25,11 @@ function elementEdit()
     editedID = Number.parseInt(row.firstChild.textContent) - 1;
     let aside = document.getElementById("edit_form");
     aside.removeAttribute("hidden");
+
     let editForm2 = document.getElementById("edit-el");
     editForm2.name.value = items[editedID]._name;
     editForm2.price.value = items[editedID]._price;
     editForm2.count.value = items[editedID]._count;
-
 }
 
 function elementDelete()
@@ -47,75 +46,95 @@ function elementDelete()
 function RebuildRecipt()
 {
     let tbl = document.getElementById("recipt");
-    while(tbl.rows.length > 1) {
+    while(tbl.rows.length > 1) 
+    {
         tbl.deleteRow(1);
-      }
+    }
+
     for(let i = 0 ; i < items.length ;i++)
     {
-     let newRoW = tbl.insertRow();
-     newRoW.draggable = true
-     newRoW.addEventListener('drag', setDragging) 
-     newRoW.addEventListener('dragover', setDraggedOver)
-     newRoW.addEventListener('drop', compare) 
-     let cellLp = newRoW.insertCell();
-     let cellName = newRoW.insertCell();
-     let cellCount = newRoW.insertCell();
-     let cellPrice = newRoW.insertCell();
-     let cellSum = newRoW.insertCell();
-     let cellEdit = newRoW.insertCell();
-     cellEdit.onclick = elementEdit;
-     cellEdit.textContent = "EDIT";
-     let cellDelete = newRoW.insertCell();
-     cellDelete.onclick = elementDelete;
-     cellDelete.textContent = "DELETE";
+        let newRoW = tbl.insertRow();
 
+        newRoW.draggable = true
+        newRoW.addEventListener('drag', setDragging) 
+        newRoW.addEventListener('dragover', setDraggedOver)
+        newRoW.addEventListener('drop', compare) 
 
-     cellLp.innerHTML = i+1;
-     cellName.innerHTML = items[i]._name;
-     cellCount.innerHTML = items[i]._count;
-     cellPrice.innerHTML = items[i]._price;
-     cellSum.innerHTML = items[i].elementTotal();
+        let cellLp = newRoW.insertCell();
+        let cellName = newRoW.insertCell();
+        let cellCount = newRoW.insertCell();
+        let cellPrice = newRoW.insertCell();
+        let cellSum = newRoW.insertCell();
 
+        let cellEdit = newRoW.insertCell();
+        cellEdit.onclick = elementEdit;
+        cellEdit.textContent = "EDIT";
 
+        let cellDelete = newRoW.insertCell();
+        cellDelete.onclick = elementDelete;
+        cellDelete.textContent = "DELETE";
+
+        cellLp.innerHTML = i+1;
+        cellName.innerHTML = items[i]._name;
+        cellCount.innerHTML = items[i]._count;
+        cellPrice.innerHTML = items[i]._price;
+        cellSum.innerHTML = items[i].elementTotal();
     }
 }
 
-const compare = (e) =>{
-    let index1 = Number.parseInt(dragging.firstChild.textContent) - 1 ;
-    let index2 = Number.parseInt(draggedOver.firstChild.textContent) - 1;
+const compare = (e) => {
+    let indexDragging = Number.parseInt(dragging.firstChild.textContent) - 1 ;
+    let indexDraggedOver = Number.parseInt(draggedOver.firstChild.textContent) - 1;
     
-    let item1 = items[index1];
-    items.splice(index2, 0, item1);
-    items.splice(index1 > index2 ? index1 +1 : index1,1);
+    let itemDragging = items[indexDragging];
+    items.splice(indexDraggedOver, 0, itemDragging);
+    items.splice(indexDragging > indexDraggedOver ? indexDragging + 1 : indexDragging, 1);
     RebuildRecipt();
-  };
+};
 
 
-  const setDraggedOver = (e) => {
-      e.preventDefault();
-      draggedOver = e.target;
-    }
+const setDraggedOver = (e) => {
+    e.preventDefault();
+    draggedOver = e.target;
+}
 
-    const setDragging = (e) =>{
-        dragging = e.target;
-      }
+const setDragging = (e) => {
+    dragging = e.target;
+}
 
+
+function isEmptyOrSpaces(str)
+{
+    return str === null || str.match(/^ *$/) !== null;
+}
 
 const addform = document.getElementById("add-el");
 addform.onsubmit = (event) => {
-   let element = new Element(addform.name.value,addform.count.value,addform.price.value);
-    items.push(element);
-    RebuildRecipt();
- event.preventDefault()
+    let newCount = parseInt(addform.count.value);
+    let newPrice = parseFloat(addform.price.value);
+    if (!isEmptyOrSpaces(addform.name.value) && !isNaN(newCount) && !isNaN(newPrice))
+    {
+        let element = new Element(addform.name.value, newCount, newPrice);
+        items.push(element);
+        console.log(element);
+        RebuildRecipt();
+    }
+    event.preventDefault()
 }
 
 const editform = document.getElementById("edit-el");
 editform.onsubmit = (event) => {
-   let element = new Element(editform.name.value,editform.count.value,editform.price.value);
-    items[editedID] = element;
-    editedID = -1;
-    let editForm = document.getElementById("edit_form");
-    editForm.setAttribute("hidden", "");
-    RebuildRecipt();
- event.preventDefault()
+
+    let editCount = parseInt(editform.count.value);
+    let editPrice = parseFloat(editform.price.value);
+    if (!isEmptyOrSpaces(editform.name.value) && !isNaN(editCount) && !isNaN(editPrice))
+    {
+        let element = new Element(editform.name.value,editCount,editPrice);
+        items[editedID] = element;
+        editedID = -1;
+        let editForm = document.getElementById("edit_form");
+        editForm.setAttribute("hidden", "");
+        RebuildRecipt();
+    }
+    event.preventDefault()
 }
