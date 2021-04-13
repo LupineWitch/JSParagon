@@ -4,9 +4,6 @@ var editedID = -1;
 var dragging;
 var draggedOver;
 
-items = JSON.parse(localStorage.getItem("receipt") || "[]");
-console.log(items);
-
 class Element
 {
     constructor(name,count,price)
@@ -95,6 +92,15 @@ const compare = (e) => {
     RebuildRecipt();
 };
 
+const setDraggedOver = (e) => {
+    e.preventDefault();
+    draggedOver = e.target;
+}
+
+const setDragging = (e) => {
+    dragging = e.target;
+}
+
 function isEmptyOrSpaces(str)
 {
     return str === null || str.match(/^ *$/) !== null;
@@ -108,17 +114,14 @@ addform.onsubmit = (event) => {
     {
         let element = new Element(addform.name.value, newCount, newPrice);
         items.push(element);
-        console.log(element);
-        localStorage.setItem("receipt", JSON.stringify(items));
+        localStorage.setItem("receiptArray", JSON.stringify(items));
         RebuildRecipt();
     }
-    //localStorage.receipt = JSON.stringify(items);
-    event.preventDefault()
+    event.preventDefault();
 }
 
 const editform = document.getElementById("edit-el");
 editform.onsubmit = (event) => {
-
     let editCount = parseInt(editform.count.value);
     let editPrice = parseFloat(editform.price.value);
     if (!isEmptyOrSpaces(editform.name.value) && !isNaN(editCount) && !isNaN(editPrice))
@@ -128,8 +131,21 @@ editform.onsubmit = (event) => {
         editedID = -1;
         let editForm = document.getElementById("edit_form");
         editForm.setAttribute("hidden", "");
-        localStorage.setItem("receipt", JSON.stringify(items));
+        localStorage.setItem("receiptArray", JSON.stringify(items));
         RebuildRecipt();
     }
     event.preventDefault()
+}
+
+if (localStorage.getItem("receiptArray") != null)
+{
+    var tmpItems = JSON.parse(localStorage.getItem("receiptArray") || "[]");
+    console.log("GÓRA")
+    console.log(tmpItems);
+    for (let i = 0; i < tmpItems.length; i++)
+    {
+        items.push(new Element(tmpItems[i]._name, tmpItems[i]._count, tmpItems[i]._price));
+    }
+    console.log(items);
+    RebuildRecipt();
 }
