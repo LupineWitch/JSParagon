@@ -53,6 +53,7 @@ function RebuildRecipt()
 
     for(let i = 0 ; i < items.length ;i++)
     {
+        console.log(items);
         let newRoW = tbl.insertRow();
 
         newRoW.draggable = true
@@ -83,22 +84,31 @@ function RebuildRecipt()
 }
 
 const compare = (e) => {
+   
     let indexDragging = Number.parseInt(dragging.firstChild.textContent) - 1 ;
     let indexDraggedOver = Number.parseInt(draggedOver.firstChild.textContent) - 1;
-    
+    console.log(dragging.firstChild );
+    console.log(draggedOver.firstChild);
+    console.log(indexDragging);
+    console.log(indexDraggedOver);
+
     let itemDragging = items[indexDragging];
-    items.splice(indexDraggedOver, 0, itemDragging);
+    items.splice( indexDragging - indexDraggedOver == -1 ? indexDraggedOver+1: indexDraggedOver, 0, itemDragging);
     items.splice(indexDragging > indexDraggedOver ? indexDragging + 1 : indexDragging, 1);
     RebuildRecipt();
 };
 
 const setDraggedOver = (e) => {
     e.preventDefault();
-    draggedOver = e.target;
+    draggedOver = e.target.parentElement;
+   // console.log(draggedOver);
 }
 
 const setDragging = (e) => {
+    e.preventDefault();
     dragging = e.target;
+   // console.log(dragging);
+
 }
 
 function isEmptyOrSpaces(str)
@@ -137,15 +147,15 @@ editform.onsubmit = (event) => {
     event.preventDefault()
 }
 
-if (localStorage.getItem("receiptArray") != null)
+ if (localStorage.getItem("receiptArray") != null)
 {
     var tmpItems = JSON.parse(localStorage.getItem("receiptArray") || "[]");
     console.log("GÓRA")
-    console.log(tmpItems);
+     console.log(tmpItems);
     for (let i = 0; i < tmpItems.length; i++)
     {
-        items.push(new Element(tmpItems[i]._name, tmpItems[i]._count, tmpItems[i]._price));
-    }
-    console.log(items);
-    RebuildRecipt();
-}
+         items.push(new Element(tmpItems[i]._name, tmpItems[i]._count, tmpItems[i]._price));
+     }
+     console.log(items);
+     RebuildRecipt();
+ }
