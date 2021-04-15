@@ -12,24 +12,24 @@
         </table>
         <aside hidden id="edit_form">
             <form id="edit-el">
-                <a>Nazwa</a>
-                <input name="name" type="text"/><br/>
-                <a>Ilośc</a>
-                <input name="count" type="number"/><br/>
-                <a>Cena</a>
-                <input name="price" type="number"/><br/>
-                <input type="submit"/>
+                <div><a>Nazwa</a>
+                    <input name="name" type="text"  required placeholder="Nazwa"/><br/></div>
+                    <div><a>Ilość</a>
+                    <input name="count" type="number" required placeholder="Ilość"/><br/></div>
+                    <div><a>Cena</a>
+                    <input name="price" type="number"  required step="0.01" placeholder="Cena"/><br/></div>
+                    <input type="submit"/>
                 </form>
         </aside>        
     </div> 
    <h2 id="sum"></h2>    
 <form id="add-el">
 <div><a>Nazwa</a>
-<input name="name" type="text" placeholder="Nazwa"/><br/></div>
+<input name="name" type="text" required placeholder="Nazwa"/><br/></div>
 <div><a>Ilość</a>
-<input name="count" type="number" placeholder="Ilość"/><br/></div>
+<input name="count" type="number" required placeholder="Ilość"/><br/></div>
 <div><a>Cena</a>
-<input name="price" type="number" placeholder="Cena"/><br/></div>
+<input name="price" type="number" required step="0.01" placeholder="Cena"/><br/></div>
 <input type="submit"/>
 </form>
 
