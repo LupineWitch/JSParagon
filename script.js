@@ -46,6 +46,7 @@ function elementDelete()
 function RebuildRecipt()
 {
     let tbl = document.getElementById("recipt");
+    let sum = 0;
     while(tbl.rows.length > 1) 
     {
         tbl.deleteRow(1);
@@ -53,9 +54,9 @@ function RebuildRecipt()
 
     for(let i = 0 ; i < items.length ;i++)
     {
-        console.log(items);
+        //console.log(items);
         let newRoW = tbl.insertRow();
-
+        sum += items[i].elementTotal();
         newRoW.draggable = true
         newRoW.addEventListener('drag', setDragging) 
         newRoW.addEventListener('dragover', setDraggedOver)
@@ -81,6 +82,9 @@ function RebuildRecipt()
         cellPrice.innerHTML = items[i]._price;
         cellSum.innerHTML = items[i].elementTotal();
     }
+
+    let sumCell = document.getElementById("sum");
+    sumCell.textContent = "Całkowita suma to: " + sum;
 }
 
 const compare = (e) => {
@@ -124,7 +128,7 @@ addform.onsubmit = (event) => {
     {
         let element = new Element(addform.name.value, newCount, newPrice);
         items.push(element);
-        localStorage.setItem("receiptArray", JSON.stringify(items));
+       // localStorage.setItem("receiptArray", JSON.stringify(items));
         RebuildRecipt();
     }
     event.preventDefault();
@@ -141,21 +145,34 @@ editform.onsubmit = (event) => {
         editedID = -1;
         let editForm = document.getElementById("edit_form");
         editForm.setAttribute("hidden", "");
-        localStorage.setItem("receiptArray", JSON.stringify(items));
         RebuildRecipt();
     }
     event.preventDefault()
 }
 
- if (localStorage.getItem("receiptArray") != null)
-{
-    var tmpItems = JSON.parse(localStorage.getItem("receiptArray") || "[]");
-    console.log("GÓRA")
-     console.log(tmpItems);
-    for (let i = 0; i < tmpItems.length; i++)
+
+
+
+ document.body.onload = function() {
+    console.log("document is loaded");
+    if (localStorage.getItem("receiptArray") != null)
     {
-         items.push(new Element(tmpItems[i]._name, tmpItems[i]._count, tmpItems[i]._price));
+        var tmpItems = JSON.parse(localStorage.getItem("receiptArray") || "[]");
+        console.log("GÓRA")
+         console.log(tmpItems);
+        for (let i = 0; i < tmpItems.length; i++)
+        {
+             items.push(new Element(tmpItems[i]._name, tmpItems[i]._count, tmpItems[i]._price));
+         }
+         console.log(items);
+         RebuildRecipt();
      }
-     console.log(items);
-     RebuildRecipt();
- }
+
+   }
+   
+
+   window.onbeforeunload = function()
+    {       
+         localStorage.setItem("receiptArray", JSON.stringify(items));
+   }
+   

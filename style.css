@@ -1,3 +1,9 @@
+html
+{
+    font-family: 'Roboto', sans-serif;
+}
+
+*:focus {outline:none !important}
 aside
  {
     position: relative;
@@ -9,4 +15,109 @@ aside
     height: 100%;
     float: right;
     position: sticky;
+}
+
+body {
+    background-color: #121212;
+    color:#BB86fc;
+  }
+
+.recHeader
+{
+text-align: center;
+}
+
+
+.fl-table
+ {
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: #212121;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.fl-table td, .fl-table th 
+{
+    text-align: center;
+    padding: 8px;
+}
+
+.fl-table td 
+{
+    border-right: 1px solid #f8f8f8;
+    font-size: 14px;
+}
+
+.fl-table thead th
+ {
+
+    background: #4FC3A1;
+}
+
+
+.fl-table thead th:nth-child(odd)
+ {
+
+    background: #212121;
+}
+
+.fl-table tr:nth-child(even) 
+{
+    background: #484848;
+}
+
+input[type="text"],[type="number"] {
+    background: #484848;
+    padding: 4px;
+    margin-top: 2px;
+    margin-bottom: 6px;
+    margin-left: 2px;
+    font-family: 'Roboto';
+    border-radius:10px;
+    border:0; 
+    border-bottom:3px solid rgb(138, 27, 119); 
+  }
+
+input[type="submit"]
+{
+    background: #444444;
+    font-family: 'Roboto';
+    border-radius:10px;
+    margin:5px;
+    color:#BB86fc;
+
+}
+
+a
+{
+margin-left: 6px;
+margin-top: 6px;
+
+}
+
+form
+{
+    background: #303030;
+    width:20%;
+    border-radius:10px;
+    margin-top: 10px;
+}
+
+form:nth-child(even)
+{
+    background: #303030;  
+}
+
+form:nth-child(odd)
+{
+    background: #212121;
+    width:40%;
+
 }

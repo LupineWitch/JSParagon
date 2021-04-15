@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <head>
-PARAGON
+ <h1 class="recHeader">PARAGON</h1>
 <link rel="stylesheet" type="text/css" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
     <div>
-        <table id="recipt">
+        <table id="recipt" class="fl-table">
             <tr><th>lp</th><th>Nazwa</th><th>Ilość</th><th>Cena</th><th>Suma</th></tr>
         </table>
         <aside hidden id="edit_form">
@@ -19,14 +21,15 @@ PARAGON
                 <input type="submit"/>
                 </form>
         </aside>        
-    </div>    
+    </div> 
+   <h2 id="sum"></h2>    
 <form id="add-el">
-<a>Nazwa</a>
-<input name="name" type="text"/><br/>
-<a>Ilośc</a>
-<input name="count" type="number"/><br/>
-<a>Cena</a>
-<input name="price" type="number"/><br/>
+<div><a>Nazwa</a>
+<input name="name" type="text" placeholder="Nazwa"/><br/></div>
+<div><a>Ilość</a>
+<input name="count" type="number" placeholder="Ilość"/><br/></div>
+<div><a>Cena</a>
+<input name="price" type="number" placeholder="Cena"/><br/></div>
 <input type="submit"/>
 </form>
 
